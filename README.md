@@ -45,7 +45,7 @@ You are tasked with designing a food ordering app, which caters to both foodies 
         Choose PostgreSQL as the database system for its robustness and support for complex data structures.
 
     Framework Selection:
-        Select a framework for the backend development. Options include Express, Koa, or NestJS, depending on your team's expertise and project requirements.
+        Select a framework for the backend development. Options include Express, Koa, or NestJS.
 
 ### Good-to-Have:
 
