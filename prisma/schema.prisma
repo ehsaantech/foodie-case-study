@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x", "linux-musl", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  FOODIE
+  CHEF
+}
+
+model Users {
+  Id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String   @unique
+  age       Int
+  dishes    Dishes[]
+  role      UserRole
+
+  login   Login @relation(fields: [loginId], references: [Id])
+  loginId Int   @unique
+
+  Orders Orders[]
+}
+
+model Login {
+  Id       Int    @id @default(autoincrement())
+  userName String @unique
+  password String
+  user     Users?
+}
+
+model Dishes {
+  Id          Int     @id @default(autoincrement())
+  name        String
+  description String
+  price       Int
+  image       String?
+
+  user   Users @relation(fields: [chefId], references: [Id]) // each dish belong to a single chef
+  chefId Int
+
+  dish_orders DishesOrders[] // many to many with orders
+}
+
+model DishesOrders {
+  orderId  Int
+  dishId   Int
+  quantity Int
+
+  order Orders @relation(fields: [orderId], references: [Id])
+  dish  Dishes @relation(fields: [dishId], references: [Id])
+
+  @@id([orderId, dishId])
+}
+
+model Orders {
+  Id      Int    @id @default(autoincrement())
+  address String
+
+  user    Users? @relation(fields: [userId], references: [Id])
+  userId Int?
+
+  payment   Payments @relation(fields: [paymentId], references: [Id]) // payment done only when selected dishes for the order
+  paymentId Int      @unique
+
+  dish_orders DishesOrders[] //many to many with dishes
+}
+
+model Payments {
+  Id          Int     @id @default(autoincrement())
+  totalAmount Int
+  paidAmount  Int
+  orders      Orders?
+}

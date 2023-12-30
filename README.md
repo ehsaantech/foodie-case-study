@@ -1,67 +1,73 @@
-# Case Study: Food Ordering App
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+</p>
 
-### Introduction:
-You are tasked with designing a food ordering app, which caters to both foodies and chefs. The app's primary features include allowing foodies to view available dishes, place orders, and enabling chefs to manage their dishes and create new ones.
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-### Features:
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-    Foodie Can See List of Dishes Available:
-        Foodies should be able to browse and view a list of available dishes.
-        Each dish should display relevant information, including name, description, price, and an image if available.
+## Description
 
-    Foodie Can See Chef Dishes:
-        Foodies should be able to view dishes specifically created by individual chefs.
-        This feature adds a personalized touch to the app's offerings.
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-    Foodies Can Place an Order:
-        Foodies should be able to place orders for dishes they select.
-        Each order should capture details such as the selected dish, quantity, delivery address, and payment information.
+## Installation
 
-    Chef Can See His Own Dishes:
-        Chefs should have access to a dashboard where they can view the dishes they've created.
-        They can monitor dish popularity and manage their listings.
+```bash
+$ npm install
+```
 
-    Chef Can Create New Dishes:
-        Chefs should be able to create and add new dishes to the app's menu.
-        This includes specifying details such as the dish name, description, price, and optional image.
+## Running the app
 
-### System Design:
+```bash
+# development
+$ npm run start
 
-    Database ERD (Entity Relationship Diagram):
-        Design a database schema to store information about dishes, orders, chefs, and foodies.
-        Define relationships between these entities to ensure data consistency.
+# watch mode
+$ npm run start:dev
 
-    High-Level Architecture Diagram:
-        Create an architectural diagram illustrating the components and how they interact.
-        Identify the key modules, including the frontend, backend, and database, and how they communicate.
+# production mode
+$ npm run start:prod
+```
 
-### Development Aspects:
+## Test
 
-    Unit Testing:
-        Implement unit tests for critical components of the application, such as order placement, dish creation, and user authentication.
-        Use a testing framework to ensure code quality and functionality.
+```bash
+# unit tests
+$ npm run test
 
-    Use Postgres Database:
-        Choose PostgreSQL as the database system for its robustness and support for complex data structures.
+# e2e tests
+$ npm run test:e2e
 
-    Framework Selection:
-        Select a framework for the backend development. Options include Express, Koa, or NestJS.
+# test coverage
+$ npm run test:cov
+```
 
-### Good-to-Have:
+## Support
 
-    Docker + Docker Compose Setup:
-        Create Docker containers for the application and database for easier deployment and scalability.
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-    Caching for Improved API Responses:
-        Implement caching mechanisms to enhance the app's performance by reducing redundant database queries.
+## Stay in touch
 
-    Payload Validation using Joi or Zod:
-        Validate incoming requests to ensure data integrity and prevent errors.
-        Use libraries like Joi or Zod to define request payload schemas.
+- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-    Error Handling:
-        Implement robust error handling to gracefully manage and report errors to users.
-        Define error codes and descriptions for better debugging.
+## License
 
-    Deployment Using Supabase:
-        Explore the possibility of deploying the app using Supabase, a robust backend-as-a-service platform.
+Nest is [MIT licensed](LICENSE).

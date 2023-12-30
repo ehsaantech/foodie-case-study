@@ -1,0 +1,32 @@
+### Register User FOODIE
+
+
+POST http://localhost:3000/user/add
+Content-Type: application/json
+
+{
+    "firstName": "afaq",
+    "lastName": "javed",
+    "email": "afaq@test.com",
+    "age": 22,
+    "role" : "FOODIE",
+    "userName" : "afaq10005",
+    "password" : "admin"
+}
+
+
+### Register User Chef
+
+
+POST http://localhost:3000/user/add
+Content-Type: application/json
+
+{
+    "firstName": "asad",
+    "lastName": "javed",
+    "email": "asad@test.com",
+    "age": 22,
+    "role" : "CHEF",
+    "userName" : "asad10005",
+    "password" : "admin"
+}

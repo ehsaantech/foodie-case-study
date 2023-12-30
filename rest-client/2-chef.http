@@ -1,0 +1,48 @@
+
+
+
+### LOGIN CHEF
+# @name tokenAPI
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "userName" : "asad10005",
+    "password" : "admin"
+}
+
+###
+
+@authToken = {{tokenAPI.response.body.data}}
+
+
+
+
+### ADD DISH 1
+POST http://localhost:3000/dish/add
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "name" : "BBQ Fish",
+    "description" : "Fast Food",
+    "price" : 1000,
+    "image" : "base64 encoded image"
+}
+
+### ADD DISH 2
+POST http://localhost:3000/dish/add
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "name" : "Qorma",
+    "description" : "Fast Food",
+    "price" : 300,
+    "image" : "base64 encoded image"
+}
+
+
+### FIND ALL DISHES
+GET http://localhost:3000/dish/findAllByChef
+Authorization: Bearer {{authToken}}

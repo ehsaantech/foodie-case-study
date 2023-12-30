@@ -1,0 +1,42 @@
+
+version: '3.8'
+
+services:
+  nestjs-app:
+    build:
+      context : .
+      dockerfile : ./Dockerfile
+    container_name: foodie-app
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:admin@postgres:5432/foodies?schema=public
+      NODE_ENV: dev
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRETE: "DO NOT USE THIS VALUE. INSTEAD, CREATE A COMPLEX SECRET AND KEEP IT SAFE OUTSIDE OF THE SOURCE CODE"
+      JWT_EXPIRE: 3600s
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres-container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: foodies
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    container_name: redis-container
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres-data:

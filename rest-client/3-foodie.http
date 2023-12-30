@@ -1,0 +1,52 @@
+
+
+
+### LOGIN FOODIE
+# @name tokenAPI
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "userName" : "afaqjaved10005",
+    "password" : "admin"
+}
+
+###
+
+@authToken = {{tokenAPI.response.body.data}}
+
+
+
+
+### FIND ALL DISHES
+GET http://localhost:3000/dish/findAll
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "name" : "Biryani",
+    "description" : "Fast Food",
+    "price" : 500,
+    "image" : "base64 encoded image"
+}
+
+### FIND ALL DISHES BY CHEF
+GET http://localhost:3000/dish/findByChef/2
+Authorization: Bearer {{authToken}}
+
+
+
+### PLACE ORDER
+POST http://localhost:3000/order/place
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "dishes": [
+        {"id" : 1 , "quantity" : 3 },
+        {"id" : 2 , "quantity" : 1 }
+    ],
+    "address" : "Karachi",
+    "totalAmount": 600,
+    "paidAmount": 600
+}
