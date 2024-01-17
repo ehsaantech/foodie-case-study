@@ -5,6 +5,7 @@ import PreLoader from "./components/preLoader/preLoader";
 import Navigation from './navigation/navigation';
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from 'react-router-dom';
+import { getToken } from './services/storage.service';
 
 function App() {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
+    const token = getToken();
     if (token) {
       dispatch(me());
     } else {

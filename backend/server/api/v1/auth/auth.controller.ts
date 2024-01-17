@@ -22,7 +22,7 @@ export class Controller extends BaseController {
     }
     async getLoggedInUser(req: Request, res: Response): Promise<void> {
         try {
-            super.response(res, HelperService.tranformMeData(req.user.toJSON()), 200, "");
+            super.response(res, HelperService.tranformMeData(req.user), 200, "");
         }
         catch (error) {
             logger.error(error);

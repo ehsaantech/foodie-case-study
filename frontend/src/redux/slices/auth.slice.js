@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import clients, { thunkHandler } from "../../services/api.service";
 import { toast } from "react-toastify";
+import { clearStorage, getToken, saveTokenToStorage, saveUserToStorage } from "../../services/storage.service";
 
 const initialState = {
   status: "idle",
@@ -22,7 +23,7 @@ export const login = createAsyncThunk("auth/login", ({ data }, thunkAPI) => {
 export const me = createAsyncThunk("auth/me", (_, thunkAPI) => {
   clients.default.client.defaults.headers.common[
     "Authorization"
-  ] = `Bearer ${localStorage.getItem("accessToken")}`;
+  ] = `Bearer ${getToken()}`;
   const response = thunkHandler(
     clients.default.client({
       method: "GET",
@@ -53,7 +54,7 @@ export const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
-      localStorage.clear();
+      clearStorage();
       delete clients.default.client.defaults.headers.common["Authorization"];
     },
   },
@@ -66,7 +67,8 @@ export const authSlice = createSlice({
         const user = action.payload.data;
         state.status = "succeeded";
         state.user = user;
-        localStorage.setItem("accessToken", user.accessToken);
+        saveTokenToStorage(user.accessToken)
+        saveUserToStorage(user);
         toast.success("Logged in successfully");
         clients.default.client.defaults.headers.common[
           "Authorization"
@@ -83,7 +85,7 @@ export const authSlice = createSlice({
         const user = action.payload.data;
         state.status = "succeeded";
         state.user = user;
-        user.accessToken = localStorage.getItem("accessToken");
+        saveUserToStorage(user);
       })
       .addCase(me.rejected, (state, action) => {
         state.status = "failed";

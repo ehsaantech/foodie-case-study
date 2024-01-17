@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import expressJwt from 'express-jwt';
-// import { User } from "../models";
+import { getPool } from "../common/database";
 import { BaseController } from '../api/v1/_base.controller';
 import { compose } from 'compose-middleware';
 
@@ -11,26 +11,27 @@ var validateJwt = expressJwt({
 
 export function isAuthenticated() {
     return compose([
-        function (req, res, next) { 
+        function (req, res, next) {
             if (typeof req.headers.authorization === 'undefined') {
                 req.headers.authorization = `Bearer ${req.cookies.token}`;
             }
             validateJwt(req, res, next);
         },
         async function (req, res, next) {
+            getPool().then((connection) => {
+                let query = 'SELECT * FROM users where id = $1';
 
-            // const user = await User.findOne({ _id: req.user.id });
+                connection.query(query, [req.user.id], async (err, result) => {
+                    if (err) {
+                        return BaseController.prototype.response(res, {}, 401, "Not Authorized");
+                    } else {
 
-            // if (!user) {
-                
-            //     return BaseController.prototype.response(res, {}, 401, "Not Authorized");
-            // }
-            const user = {};
-
-            req.user = user;
-            next();
-            return null;
-
+                        req.user = result.rows[0];
+                        next();
+                        return null;
+                    }
+                });
+            });
         }
     ]);
 }

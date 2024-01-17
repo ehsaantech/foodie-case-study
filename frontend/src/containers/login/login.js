@@ -1,10 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import PandaLogo from "../../assets/pandalogo.png";
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/slices/auth.slice';
 
-const Login = () => {
+const LoginPage = () => {
   const navigation = useNavigate();
-
+  const dispatch = useDispatch();
 
   const gotoSignup = () => {
     navigation('/signup')
@@ -17,7 +19,10 @@ const Login = () => {
       email: e.target[0].value,
       password: e.target[1].value
     }
-    console.log(payload);
+
+    dispatch(login({
+      data: payload
+    }))
   }
 
 
@@ -31,21 +36,21 @@ const Login = () => {
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
-            <label for="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
             <div className="mt-2">
-              <input id="email" name="email" type="email" autocomplete="email" required className="block w-full rounded-md border-0 px-2 py-1.5 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6" />
+              <input id="email" name="email" type="email" autoComplete="off" required className="block w-full rounded-md border-0 px-2 py-1.5 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6" />
             </div>
           </div>
 
           <div>
             <div className="flex items-center justify-between">
-              <label for="password" className="block text-sm font-medium leading-6 text-gray-900">Password</label>
+              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">Password</label>
               <div className="text-sm">
                 <span className="font-semibold text-pink-600 hover:text-pink-500 cursor-pointer">Forgot password?</span>
               </div>
             </div>
             <div className="mt-2">
-              <input id="password" name="password" type="password" autocomplete="current-password" required className="block w-full rounded-md border-0 px-2 py-1.5 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6" />
+              <input id="password" name="password" type="password" autoComplete="off" required className="block w-full rounded-md border-0 px-2 py-1.5 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6" />
             </div>
           </div>
 
@@ -63,4 +68,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default LoginPage

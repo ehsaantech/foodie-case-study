@@ -4,7 +4,7 @@ import controller from "./auth.controller";
 
 const router = express.Router();
 
-router.get('/', controller.login);
+router.post('/login', controller.login);
 router.get('/me', auth.isAuthenticated(), controller.getLoggedInUser);
 
 export default router;

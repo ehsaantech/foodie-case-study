@@ -3,11 +3,12 @@ export class HelperService {
 
     tranformMeData(user) {
         return {
-            id: user['_id'],
-            firstName: user['firstName'],
-            lastName: user['lastName'],
-            email: user['email'],
-            username: user?.username
+            id: user?.id,
+            firstName: user?.firstname,
+            lastName: user?.lastname,
+            username: user?.username,
+            email: user?.email,
+            role: user?.role
         };
     }
 

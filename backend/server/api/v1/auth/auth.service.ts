@@ -1,5 +1,6 @@
 import { getPool } from "../../../common/database";
 import jwt from "jsonwebtoken";
+import * as bcrypt from 'bcrypt';
 
 export class AuthService {
 
@@ -12,22 +13,30 @@ export class AuthService {
                 getPool().then((connection) => {
                     let query = 'SELECT * FROM users where email = $1';
 
-                    connection.query(query, [email], (err, result) => {
+                    connection.query(query, [email], async (err, result) => {
                         if (err) {
                             return reject({ message: 'Email or Password invalid!', code: 400 });
                         } else {
-                            const user = result[1].rows;
+                            const user = result.rows[0];
 
+                            const match = await bcrypt.compare(password, user.password);
+
+                            if(!match) {
+                                return reject({ message: 'Password invalid!', code: 400 });
+                            }
 
                             const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
                                 expiresIn: 604800, // 1 week hours
                                 algorithm: 'HS256'
                             });
 
-                            return resolve({
-                                user,
-                                token
-                            })
+                            const responsePayload = {
+                                ...user,
+                                accessToken: token,
+                            }
+                            delete responsePayload.password;
+
+                            return resolve(responsePayload)
                         }
                     });
                 }).catch((err) => {

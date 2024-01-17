@@ -30,12 +30,11 @@ export class UserService {
     async create(userData): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
-                getPool().then((connection) => {
-                    let password = '';
-                    bcrypt.hash(userData.password, null, null, (err, hash) => {
-                        password = hash;
-                    })
+                getPool().then(async (connection) => {
+                    let password = await bcrypt.hash(userData.password, 10);
+
                     const payload = [userData.firstname, userData.lastname, `${userData.firstname} ${userData.lastname}`, userData.email, userData.role, password]
+                    console.log(password, payload);
                     let query = 'INSERT INTO users (firstname, lastname, username, email, role, password) VALUES ($1, $2, $3, $4, $5, $6)';
                     connection.query(query, payload, (err, result) => {
                         if (err) {
