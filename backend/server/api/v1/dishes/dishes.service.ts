@@ -1,7 +1,7 @@
 import { getPool } from "../../../common/database";
 import * as bcrypt from 'bcrypt';
 
-export class UserService {
+export class DishesService {
 
     constructor() { }
 
@@ -9,14 +9,14 @@ export class UserService {
         return new Promise(async (resolve, reject) => {
             try {
                 getPool().then((connection) => {
-                    let query = 'SELECT * FROM users';
+                    let query = 'SELECT dd.id, dd.name, dd.description, dd.price, dd.image, dd.chef_id, dd.createddate, uu.username as chef_name FROM dishes as dd INNER JOIN users as uu ON dd.chef_id = uu.id';
 
                     connection.query(query, (err, result) => {
                         if (err) {
                             return reject(err);
                         } else {
-                            const users = result.rows;
-                            return resolve(users);
+                            const dishes = result.rows;
+                            return resolve(dishes);
                         }
                     });
                 }).catch((err) => {
@@ -27,19 +27,17 @@ export class UserService {
             }
         })
     }
-    async create(userData): Promise<any> {
+    async create(payload): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
-                let password = await bcrypt.hash(userData.password, 10);
                 getPool().then(async (connection) => {
-
-                    const payload = [userData.firstname, userData.lastname, `${userData.firstname} ${userData.lastname}`, userData.email, userData.role, password]
-                    let query = 'INSERT INTO users (firstname, lastname, username, email, role, password) VALUES ($1, $2, $3, $4, $5, $6)';
-                    connection.query(query, payload, (err, result) => {
+                    const requestPayload = [payload.name, payload.description, payload.price, payload.image, payload.chef_id]
+                    let query = 'INSERT INTO dishes (name, description, price, image, chef_id) VALUES ($1, $2, $3, $4, $5)';
+                    connection.query(query, requestPayload, (err, result) => {
                         if (err) {
                             return reject(err);
                         } else {
-                            return resolve(userData);
+                            return resolve(payload);
                         }
                     });
                 }).catch((err) => {
@@ -54,14 +52,14 @@ export class UserService {
         return new Promise(async (resolve, reject) => {
             try {
                 getPool().then((connection) => {
-                    let query = `SELECT * FROM users WHERE id = $1`;
+                    let query = `SELECT * FROM dishes WHERE id = $1`;
 
                     connection.query(query, [id], (err, result) => {
                         if (err) {
                             return reject(err);
                         } else {
-                            const users = result.rows[0];
-                            return resolve(users);
+                            const dishes = result.rows[0];
+                            return resolve(dishes);
                         }
                     });
                 }).catch((err) => {
@@ -72,19 +70,41 @@ export class UserService {
             }
         })
     }
-    async update(id, user): Promise<any> {
+    async getByChefID(id): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
                 getPool().then((connection) => {
-                    let payload = [user.firstname, user.lastname, `${user.firstname} ${user.lastname}`, user.role, id]
-                    let query = 'UPDATE users SET firstname = $1, lastname = $2, username = $3, role = $4 WHERE id = $5';
+                    let query = `SELECT * FROM dishes WHERE chef_id = $1`;
 
-                    connection.query(query, payload, (err, result) => {
+                    connection.query(query, [id], (err, result) => {
                         if (err) {
                             return reject(err);
                         } else {
-                            const users = result.rows;
-                            return resolve(users);
+                            const dishes = result.rows;
+                            return resolve(dishes);
+                        }
+                    });
+                }).catch((err) => {
+                    return reject(err);
+                })
+            } catch (err) {
+                return reject(err);
+            }
+        })
+    }
+    async update(id, payload): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                getPool().then((connection) => {
+                    let requestPayload = [payload.name, payload.description, payload.price, payload.image, id]
+                    let query = 'UPDATE dishes SET name = $1, description = $2, price = $3, image = $4 WHERE id = $5';
+
+                    connection.query(query, requestPayload, (err, result) => {
+                        if (err) {
+                            return reject(err);
+                        } else {
+                            const dishes = result.rows;
+                            return resolve(dishes);
                         }
                     });
                 }).catch((err) => {
@@ -99,14 +119,14 @@ export class UserService {
         return new Promise(async (resolve, reject) => {
             try {
                 getPool().then((connection) => {
-                    let query = 'DELETE FROM users WHERE id = $1';
+                    let query = 'DELETE FROM dishes WHERE id = $1';
 
                     connection.query(query, [id], (err, result) => {
                         if (err) {
                             return reject(err);
                         } else {
-                            const users = result.rows;
-                            return resolve(users);
+                            const dishes = result.rows;
+                            return resolve(dishes);
                         }
                     });
                 }).catch((err) => {
@@ -119,4 +139,4 @@ export class UserService {
     }
 }
 
-export default new UserService();
+export default new DishesService();

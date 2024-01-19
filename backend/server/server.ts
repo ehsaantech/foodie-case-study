@@ -8,6 +8,7 @@ connectDB()
   .then(async (connection) => {
     const seeding = new Seeds(connection);
     await seeding.userSeeding();
+    await seeding.dishesSeeding();
 
   }, () => { });
 

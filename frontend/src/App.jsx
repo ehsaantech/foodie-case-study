@@ -5,7 +5,7 @@ import PreLoader from "./components/preLoader/preLoader";
 import Navigation from './navigation/navigation';
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getToken } from './services/storage.service';
+import { clearStorage, getToken } from './services/storage.service';
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +31,10 @@ function App() {
   useEffect(() => {
     if (userStatus === 'succeeded' || userStatus === 'failed') {
       setIsLoading(false);
+      if(userStatus === 'failed') {
+        clearStorage();
+        navigate('/login')
+      }
     }
   })
 

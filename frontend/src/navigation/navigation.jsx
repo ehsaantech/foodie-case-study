@@ -9,6 +9,8 @@ import SignupContainer from '../containers/signup/signup';
 //components
 import NotFound from "../components/notfound/notfound";
 import BaseComponent from '../components/baseLayout/baseLayout';
+import MyOrder from "../containers/myOrder/myOrder";
+import MyDishes from "../containers/myDishes/myDishes";
 
 const Navigation = () => {
     const user = useSelector((state) => state.auth.user);
@@ -16,6 +18,8 @@ const Navigation = () => {
         <Routes>
             <Route path="/food" element={<BaseComponent />}>
                 <Route index path="home" element={<ProtectedRoute isLoggedIn={user}> <Dashboard /></ProtectedRoute>} />
+                <Route index path="my-order" element={<ProtectedRoute isLoggedIn={user}> <MyOrder /></ProtectedRoute>} />
+                <Route index path="dishes" element={<ProtectedRoute isLoggedIn={user}> <MyDishes /></ProtectedRoute>} />
             </Route>
             <Route path="/login" element={<LoginContainer />} />
             <Route path="/signup" element={<SignupContainer />} />

@@ -50,7 +50,7 @@ const SignupPage = () => {
   return (
     <div className="w-full h-[100vh] flex flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img className="mx-auto h-10 w-auto" src={PandaLogo} alt="Panda Logo" />
+        <img className="mx-auto h-20 w-auto" src={PandaLogo} alt="Panda Logo" />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Create your account</h2>
       </div>
 
@@ -81,7 +81,7 @@ const SignupPage = () => {
             <label htmlFor="role" className="block text-sm font-medium leading-6 text-gray-900">Role</label>
             <div className="mt-1">
               <select id="role" required className="block w-full rounded-md border-0 px-2 py-2 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6">
-                <option value="" selected>Choose a country</option>
+                <option value="" selected>Select role</option>
                 <option value="user">User</option>
                 <option value="chef">Chef</option>
               </select>

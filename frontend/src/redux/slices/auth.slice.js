@@ -76,7 +76,7 @@ export const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.status = "failed";
-        toast.error(action.payload.data.message);
+        toast.error(action.payload?.data?.message);
       })
       .addCase(me.pending, (state) => {
         state.status = "loading";
@@ -89,7 +89,7 @@ export const authSlice = createSlice({
       })
       .addCase(me.rejected, (state, action) => {
         state.status = "failed";
-        toast.error(action.payload.data.message);
+        toast.error(action.payload?.data?.message);
       })
       .addCase(addUser.pending, (state) => {
         state.status = "loading";
@@ -100,7 +100,7 @@ export const authSlice = createSlice({
       })
       .addCase(addUser.rejected, (state, action) => {
         state.status = "failed";
-        toast.error(action.payload.data.message);
+        toast.error(action.payload?.data?.message);
       })
   },
 });

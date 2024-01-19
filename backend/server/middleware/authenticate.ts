@@ -25,8 +25,12 @@ export function isAuthenticated() {
                     if (err) {
                         return BaseController.prototype.response(res, {}, 401, "Not Authorized");
                     } else {
+                        const user = result.rows[0]
+                        if(!user) {
+                            return BaseController.prototype.response(res, {}, 401, "Not Authorized");
+                        }
 
-                        req.user = result.rows[0];
+                        req.user = user;
                         next();
                         return null;
                     }
