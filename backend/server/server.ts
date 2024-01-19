@@ -9,7 +9,7 @@ connectDB()
     const seeding = new Seeds(connection);
     await seeding.userSeeding();
     await seeding.dishesSeeding();
-
+    await seeding.orderSeeding();
   }, () => { });
 
 export default new Server()

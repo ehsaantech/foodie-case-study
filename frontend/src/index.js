@@ -17,7 +17,7 @@ root.render(
         <App />
       </BrowserRouter>
       <ToastContainer
-        position="top-right"
+        position="bottom-left"
         theme="dark"
         autoClose={3500}
         hideProgressBar={false}

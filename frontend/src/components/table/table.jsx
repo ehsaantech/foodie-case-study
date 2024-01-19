@@ -25,9 +25,13 @@ const Table = ({ headers, data, isloading }) => {
                                 <tr class="odd:bg-white even:bg-gray-50">
                                     {headers.map((header) => (
                                         <th scope="row" class="px-6 py-4">
-                                            {header.type === 'text' && (<>{d[header.key]}</>)}
-                                            {header.type === 'date' && (<>{new Date(d[header.key]).toDateString()}</>)}
-                                            {header.type === 'image' && (<img src={d[header.key]} alt='Food Image' className="mx-auto h-8 w-auto rounded" />)}
+                                            {header?.render ? (<> {header.render(d[header.key], d)} </>) : (
+                                                <>
+                                                    {header.type === 'text' && (<>{d[header.key]}</>)}
+                                                    {header.type === 'date' && (<>{new Date(d[header.key]).toDateString()}</>)}
+                                                    {header.type === 'image' && (<img src={d[header.key]} alt='Food Image' className="h-8 w-auto rounded" />)}
+                                                </>
+                                            )}
                                         </th>
                                     ))}
                                 </tr>

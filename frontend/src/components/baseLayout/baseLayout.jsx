@@ -6,7 +6,7 @@ import PrimaryButton from '../buttons/primaryButton';
 import { FaPowerOff, FaHome } from "react-icons/fa";
 import { ImSpoonKnife } from "react-icons/im";
 import { MdOutlineFoodBank, MdOutlineFastfood } from "react-icons/md";
-
+import { FaShoppingCart } from "react-icons/fa";
 
 import Logo from "../../assets/foodpanda.svg";
 import Avatar from '../avatar/avatar';
@@ -15,6 +15,7 @@ const BaseLayout = () => {
 
   const [pageTitle, setPageTitle] = useState('home');
   const user = useSelector((state) => state.auth.user);
+  const cart = useSelector((state) => state.cart.cartItem);
 
   const navigation = useNavigate();
   const dispatch = useDispatch();
@@ -91,7 +92,13 @@ const BaseLayout = () => {
           <div className='text-4xl tracking-widest uppercase font-extrabold'>
             {pageTitle}
           </div>
-          <Avatar firstname={user.firstname} lastname={user.lastname} />
+          <div className='flex items-center gap-4'>
+            <Avatar firstname={user.firstname} lastname={user.lastname} />
+            <div className='relative'>
+              <FaShoppingCart size="32" className='cursor-pointer' onClick={() => {navigation('/food/cart'); setPageTitle("My Cart");}} />
+              <div className='absolute h-3 w-3 flex justify-center items-center rounded-full bg-pink-500 text-white text-[8px] -top-1 -right-1'>{cart && cart?.length ? cart.length : 0}</div>
+            </div>
+          </div>
         </div>
         <div className='w-full mt-2 overflow-auto'>
           <Outlet />

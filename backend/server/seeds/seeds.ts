@@ -45,6 +45,24 @@ class Seeds {
             }
         })
     }
+    public async orderSeeding() {
+        return new Promise((resolve, reject) => {
+            try {
+                if (this.connection) {
+                    let query = 'CREATE TABLE IF NOT EXISTS orders (id uuid PRIMARY KEY DEFAULT uuid_generate_v4(), user_id uuid NOT NULL, user_name VARCHAR(255) NOT NULL, totalPrice INT NOT NULL, address VARCHAR(255) NOT NULL, street VARCHAR(255) NOT NULL, floor VARCHAR(255) NOT NULL, notes VARCHAR(255) NOT NULL, items JSONB NOT NULL, createdDate DATE DEFAULT CURRENT_DATE)';
+
+                    this.connection.query(query, (err, result) => {
+                        resolve({})
+                    });
+                } else {
+                    l.error('No Connection Found');
+                    return reject({ message: 'No Connection Found' });
+                }
+            } catch (err) {
+                return reject(err);
+            }
+        })
+    }
 
 
 

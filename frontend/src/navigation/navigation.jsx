@@ -11,6 +11,8 @@ import NotFound from "../components/notfound/notfound";
 import BaseComponent from '../components/baseLayout/baseLayout';
 import MyOrder from "../containers/myOrder/myOrder";
 import MyDishes from "../containers/myDishes/myDishes";
+import CartComponent from "../containers/cart/cart";
+import PaymentComponent from "../containers/payment/payment";
 
 const Navigation = () => {
     const user = useSelector((state) => state.auth.user);
@@ -20,6 +22,8 @@ const Navigation = () => {
                 <Route index path="home" element={<ProtectedRoute isLoggedIn={user}> <Dashboard /></ProtectedRoute>} />
                 <Route index path="my-order" element={<ProtectedRoute isLoggedIn={user}> <MyOrder /></ProtectedRoute>} />
                 <Route index path="dishes" element={<ProtectedRoute isLoggedIn={user}> <MyDishes /></ProtectedRoute>} />
+                <Route index path="cart" element={<ProtectedRoute isLoggedIn={user}> <CartComponent /></ProtectedRoute>} />
+                <Route index path="payment" element={<ProtectedRoute isLoggedIn={user}> <PaymentComponent /></ProtectedRoute>} />
             </Route>
             <Route path="/login" element={<LoginContainer />} />
             <Route path="/signup" element={<SignupContainer />} />

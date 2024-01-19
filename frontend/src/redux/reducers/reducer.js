@@ -2,10 +2,12 @@ import { combineReducers } from "@reduxjs/toolkit";
 
 import authReducer from "../slices/auth.slice";
 import dishReducer from "../slices/dishes.slice";
+import cartReducer from "../slices/cart.slice";
 
 const combinedRedurcers = combineReducers({
   auth: authReducer,
-  dish: dishReducer
+  dish: dishReducer,
+  cart: cartReducer,
 });
 
 

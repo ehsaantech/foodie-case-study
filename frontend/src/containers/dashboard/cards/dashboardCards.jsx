@@ -1,8 +1,19 @@
 import React from 'react'
 import Loading from '../../../components/loading/loading';
 import { TbChefHat } from "react-icons/tb";
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../redux/slices/cart.slice';
 
 const DashboardCards = ({ data, isLoading }) => {
+
+    const dispatch = useDispatch();
+
+    const addToCartItem = (item) => {
+        dispatch(addToCart({
+            item: { ...item, quantity: 1 }
+        }))
+    }
+
     return (
         <div className=''>
             {isLoading ? (
@@ -19,15 +30,14 @@ const DashboardCards = ({ data, isLoading }) => {
                                     <div class="p-5">
                                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{d.name}</h5>
                                         <p class="mb-3 font-normal text-gray-700 ">{d.description}</p>
-                                        <div className='flex justify-between items-center'>
-                                            <span className='text-sm font-bold'>Rs. {d.price}</span>
-                                            <span className='text-sm'>{new Date(d.createddate).toDateString()}</span>
-                                        </div>
                                         <div className='flex justify-start items-center gap-2 mt-2'>
                                             <TbChefHat />
                                             <span className='text-sm font-bold italic'>{d.chef_name}</span>
                                         </div>
-
+                                        <div className='flex justify-between items-center mt-4'>
+                                            <span className='text-sm font-bold'>Rs. {d.price}</span>
+                                            <button className='bg-pink-500 text-white p-2 text-sm font-bold rounded hover:bg-pink-600' onClick={() => addToCartItem(d)}>Add to Cart</button>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
