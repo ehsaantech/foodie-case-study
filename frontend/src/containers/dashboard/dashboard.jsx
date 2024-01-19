@@ -11,7 +11,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const dishData = useSelector((state) => state.dish.dishes);
   const [data, setData] = useState(true);
-  const [isCards, setIsCards] = useState(false);
+  const [isCards, setIsCards] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   const getAllDishesList = () => {

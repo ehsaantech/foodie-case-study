@@ -15,9 +15,7 @@ const DashboardCards = ({ data, isLoading }) => {
                         <div className='flex items-center flex-wrap gap-4 justify-between'>
                             {data.map((d) => (
                                 <div class="max-w-xs bg-white border border-gray-200 rounded-lg shadow">
-                                    <a href="#">
-                                        <img class="rounded-t-lg w-80 h-56" src={d.image} alt="" />
-                                    </a>
+                                    <img class="rounded-t-lg w-80 h-56" src={d.image} alt="" />
                                     <div class="p-5">
                                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{d.name}</h5>
                                         <p class="mb-3 font-normal text-gray-700 ">{d.description}</p>
