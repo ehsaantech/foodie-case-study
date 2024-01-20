@@ -13,6 +13,8 @@ import MyOrder from "../containers/myOrder/myOrder";
 import MyDishes from "../containers/myDishes/myDishes";
 import CartComponent from "../containers/cart/cart";
 import PaymentComponent from "../containers/payment/payment";
+import Chefs from "../containers/chefs/chefs";
+import ChefsDetails from "../containers/chefs/ChefsDetails/ChefsDetails";
 
 const Navigation = () => {
     const user = useSelector((state) => state.auth.user);
@@ -24,6 +26,8 @@ const Navigation = () => {
                 <Route index path="dishes" element={<ProtectedRoute isLoggedIn={user}> <MyDishes /></ProtectedRoute>} />
                 <Route index path="cart" element={<ProtectedRoute isLoggedIn={user}> <CartComponent /></ProtectedRoute>} />
                 <Route index path="payment" element={<ProtectedRoute isLoggedIn={user}> <PaymentComponent /></ProtectedRoute>} />
+                <Route index path="chefs" element={<ProtectedRoute isLoggedIn={user}> <Chefs /></ProtectedRoute>} />
+                <Route index path="chefs/:id" element={<ProtectedRoute isLoggedIn={user}> <ChefsDetails /></ProtectedRoute>} />
             </Route>
             <Route path="/login" element={<LoginContainer />} />
             <Route path="/signup" element={<SignupContainer />} />

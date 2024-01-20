@@ -72,6 +72,28 @@ export class UserService {
             }
         })
     }
+    async getChefUsers(): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                getPool().then((connection) => {
+                    let query = `SELECT * FROM users WHERE role = $1`;
+
+                    connection.query(query, ['chef'], (err, result) => {
+                        if (err) {
+                            return reject(err);
+                        } else {
+                            const users = result.rows;
+                            return resolve(users);
+                        }
+                    });
+                }).catch((err) => {
+                    return reject(err);
+                })
+            } catch (err) {
+                return reject(err);
+            }
+        })
+    }
     async update(id, user): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {

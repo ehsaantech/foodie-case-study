@@ -18,6 +18,16 @@ export const addOrders = createAsyncThunk("orders/addOrders", ({ data }, thunkAP
   );
   return response;
 });
+export const getUserOrdersById = createAsyncThunk("orders/getUserOrdersById", ({ id }, thunkAPI) => {
+  const response = thunkHandler(
+    clients.default.client({
+      method: "GET",
+      url: `/order/user/${id}`
+    }),
+    thunkAPI
+  );
+  return response;
+});
 
 export const dishesSlice = createSlice({
   name: "orders",
@@ -34,6 +44,17 @@ export const dishesSlice = createSlice({
         toast.success("Order Created Successfully")
       })
       .addCase(addOrders.rejected, (state, action) => {
+        state.status = "failed";
+        toast.error(action.payload?.data?.message);
+      })
+      .addCase(getUserOrdersById.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getUserOrdersById.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.orders = action.payload.data;
+      })
+      .addCase(getUserOrdersById.rejected, (state, action) => {
         state.status = "failed";
         toast.error(action.payload?.data?.message);
       })

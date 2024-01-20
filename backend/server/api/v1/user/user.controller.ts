@@ -45,6 +45,19 @@ export class Controller extends BaseController {
             super.response(res, '', err.code, err.message);
         }
     }
+    async getChefUsers(req: Request, res: Response): Promise<void> {
+        try {
+            const user = await UserService.getChefUsers();
+            super.response(res, user, 200, "");
+        }
+        catch (error) {
+            logger.error(error);
+            const err = manageError(error);
+            l.error(`Error in creating user, err code: ${400}`);
+            l.error(err.message);
+            super.response(res, '', err.code, err.message);
+        }
+    }
     async update(req: Request, res: Response): Promise<void> {
         try {
             const user = await UserService.update(req.params.id, req.body);

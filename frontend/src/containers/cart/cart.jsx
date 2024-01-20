@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { calculateTotal, deleteFromCart, updateInCart } from '../../redux/slices/cart.slice';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import { useNavigate } from 'react-router-dom';
+import { updatePageTitle } from '../../redux/slices/general.slice';
 
 
 const CartComponent = () => {
@@ -97,6 +98,13 @@ const CartComponent = () => {
     dispatch(calculateTotal())
   }
 
+  const proceedToPayment = () => {
+    navigate('/food/payment')
+    dispatch(updatePageTitle({
+      title: "Payments"
+    }))
+  }
+
   useEffect(() => {
     getTotalAmount()
   }, [])
@@ -117,7 +125,8 @@ const CartComponent = () => {
 
         <PrimaryButton
           title="Proceed to Payment"
-          onClick={() => navigate('/food/payment')}
+          onClick={proceedToPayment}
+          disabled={!cart && !cart?.length}
         />
       </div>
 

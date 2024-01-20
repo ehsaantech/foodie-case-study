@@ -7,15 +7,17 @@ import { FaPowerOff, FaHome } from "react-icons/fa";
 import { ImSpoonKnife } from "react-icons/im";
 import { MdOutlineFoodBank, MdOutlineFastfood } from "react-icons/md";
 import { FaShoppingCart } from "react-icons/fa";
+import { SiCodechef } from "react-icons/si";
 
 import Logo from "../../assets/foodpanda.svg";
 import Avatar from '../avatar/avatar';
+import { updatePageTitle } from '../../redux/slices/general.slice';
 
 const BaseLayout = () => {
 
-  const [pageTitle, setPageTitle] = useState('home');
   const user = useSelector((state) => state.auth.user);
   const cart = useSelector((state) => state.cart.cartItem);
+  const pageTitle = useSelector((state) => state.general.pageTitle);
 
   const navigation = useNavigate();
   const dispatch = useDispatch();
@@ -36,6 +38,13 @@ const BaseLayout = () => {
       role: 'both'
     },
     {
+      title: "Chef's",
+      icon: <SiCodechef />,
+      route: '/food/chefs',
+      pageTitle: "All Chef's",
+      role: 'both'
+    },
+    {
       title: 'My Dishes',
       icon: <ImSpoonKnife />,
       route: '/food/dishes',
@@ -44,6 +53,12 @@ const BaseLayout = () => {
     }
   ]
 
+  const gotToCart = () => {
+    navigation('/food/cart');
+    dispatch(updatePageTitle({
+      title: 'My Cart'
+    }))
+  }
 
   const logoutHandler = () => {
     dispatch(logout())
@@ -71,7 +86,9 @@ const BaseLayout = () => {
                 ishidden={menu.role === 'chef' && user.role !== 'chef'}
                 onClick={() => {
                   navigateTo(menu.route);
-                  setPageTitle(menu.pageTitle)
+                  dispatch(updatePageTitle({
+                    title: menu.pageTitle
+                  }))
                 }}
               />
             ))}
@@ -95,7 +112,7 @@ const BaseLayout = () => {
           <div className='flex items-center gap-4'>
             <Avatar firstname={user.firstname} lastname={user.lastname} />
             <div className='relative'>
-              <FaShoppingCart size="32" className='cursor-pointer' onClick={() => {navigation('/food/cart'); setPageTitle("My Cart");}} />
+              <FaShoppingCart size="32" className='cursor-pointer' onClick={gotToCart} />
               <div className='absolute h-3 w-3 flex justify-center items-center rounded-full bg-pink-500 text-white text-[8px] -top-1 -right-1'>{cart && cart?.length ? cart.length : 0}</div>
             </div>
           </div>

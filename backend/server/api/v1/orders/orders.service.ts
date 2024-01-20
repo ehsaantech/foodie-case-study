@@ -58,7 +58,29 @@ export class OrderService {
                         if (err) {
                             return reject(err);
                         } else {
-                            const order = result.rows[0];
+                            const order = result.rows;
+                            return resolve(order);
+                        }
+                    });
+                }).catch((err) => {
+                    return reject(err);
+                })
+            } catch (err) {
+                return reject(err);
+            }
+        })
+    }
+    async getOrderByUserId(id): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                getPool().then((connection) => {
+                    let query = `SELECT * FROM orders WHERE user_id = $1`;
+
+                    connection.query(query, [id], (err, result) => {
+                        if (err) {
+                            return reject(err);
+                        } else {
+                            const order = result.rows;
                             return resolve(order);
                         }
                     });

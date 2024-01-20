@@ -4,6 +4,7 @@ import Loading from '../../components/loading/loading';
 import { addOrders } from '../../redux/slices/order.slice';
 import { useNavigate } from 'react-router-dom';
 import { clearCart } from '../../redux/slices/cart.slice';
+import { updatePageTitle } from '../../redux/slices/general.slice';
 
 const PaymentComponent = () => {
 
@@ -26,6 +27,7 @@ const PaymentComponent = () => {
             street: e.target.street.value,
             floor: e.target.floor.value,
             notes: e.target.notes.value,
+            status: 'completed'
         }
 
         dispatch(addOrders({
@@ -37,10 +39,19 @@ const PaymentComponent = () => {
             e.target.floor.value = "";
             e.target.notes.value = "";
             dispatch(clearCart());
+            dispatch(updatePageTitle({
+                title: 'Home'
+            }))
             navigate('/food/home');
         })
     }
 
+    const backToCart = () => {
+        dispatch(updatePageTitle({
+            title: 'My Cart'
+        }))
+        navigate('/food/cart');
+    }
 
     return (
         <div className='w-full mt-5'>
@@ -48,11 +59,10 @@ const PaymentComponent = () => {
                 <div className='flex justify-between font-extrabold text-3xl mb-5'>
                     <div className='font-extrabold text-3xl uppercase tracking-widest'>Review Items</div>
                     <span>
-
                         Total Payable: Rs. {totalAmount}
                     </span>
                 </div>
-                {cart.map((c) => (
+                {cart?.map((c) => (
                     <div className='flex items-center gap-5'>
                         <div className='w-40'>
                             <img className="h-20 w-auto rounded" src={c.image} alt="Food Image" />
@@ -85,7 +95,7 @@ const PaymentComponent = () => {
 
 
                     <div className='flex justify-end items-center gap-2 mt-10'>
-                        <button type='button' className='p-2.5 rounded font-semibold hover:bg-gray-400 hover:text-white disabled:cursor-not-allowed' disabled={isLoading}>Back</button>
+                        <button type='button' className='p-2.5 rounded font-semibold hover:bg-gray-400 hover:text-white disabled:cursor-not-allowed' disabled={isLoading} onClick={backToCart}>Back</button>
                         <button type='submit' className='bg-pink-500 text-white p-2.5 rounded font-semibold hover:bg-pink-600 flex items-center gap-1 disabled:bg-gray-400 disabled:text-white disabled:cursor-not-allowed' disabled={isLoading}>
                             {isLoading && <Loading />} Place Order
                         </button>

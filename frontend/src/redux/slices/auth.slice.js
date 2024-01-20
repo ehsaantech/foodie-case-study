@@ -33,6 +33,7 @@ export const me = createAsyncThunk("auth/me", (_, thunkAPI) => {
   );
   return response;
 });
+
 export const addUser = createAsyncThunk(
   "auth/addUser",
   ({ data }, thunkAPI) => {
